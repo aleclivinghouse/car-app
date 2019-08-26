@@ -49,8 +49,8 @@ class SelectionForm extends React.Component {
     if(models !== undefined){
      theModels = models.map((item)=>
      <option value={item.model_name}>{item.model_name}</option>
-   );
-}
+    );
+    }
 
 
 const renderFieldMake = ({ label, type, meta: { touched, error } }) => (
@@ -138,8 +138,55 @@ const renderFieldDate = ({ label, type, meta: { touched, error } }) => (
   </div>
 );
 
+const years = ["2000", "2001", "2003"];
+const makes = ["Toyota", "Nissan"];
+const models2 = {
+  Toyota: ["model Toyota 1", "model Toyota 2"],
+  Nissan: ["model Nissan 1", "model Nissa 2"]
+};
 
-const renderMembers = ({ fields, meta: { error, submitFailed } }) => (
+const Member = ({ selectedMake, fields, car, index }) => {
+  const myModels = models2[selectedMake];
+  return (
+      <li key={index}>
+        <button type="button" onClick={() => fields.remove(index)}>
+          Remove Car
+        </button>
+        <Field
+          name={`${car}.Make`}
+          component="select"
+          label="Make"
+        >
+          {makes.map((make, i) => <option key={i} value={make}>{make}</option>)}
+        </Field>
+        {selectedMake && (
+          <div>
+          <Field
+            name={`${car}.Model`}
+            component="select"
+            label="Model"
+          >
+            {myModels.map((model, i) => <option key={i} value={model}>{model}</option>)}
+          </Field>
+          <Field
+            name={`${car}.Date`}
+            component="select"
+            label="Year"
+          >
+            {years.map((year, i) => <option key={i} value={year}>{year}</option>)}
+          </Field>
+          </div>
+        )}
+      </li>
+  );
+};
+
+const renderMembers = ({ SelectionForm, fields, meta: { error, submitFailed } }) => {
+  const selector = formValueSelector('SelectionForm');
+  console.log('form');
+  console.log(SelectionForm);
+  //const myModel = models[selectedMake];
+  return (
   <ul>
     <li>
       <button type="button" onClick={() => fields.push({})}>
@@ -147,33 +194,20 @@ const renderMembers = ({ fields, meta: { error, submitFailed } }) => (
       </button>
       {submitFailed && error && <span>{error}</span>}
     </li>
-    {fields.map((car, index) => (
-      <li key={index}>
-        <button type="button" onClick={() => fields.remove(index)}>
-          Remove Car
-        </button>
-        <Field
-          name={`${car.Make}`}
-          type="text"
-          component={renderFieldMake}
-          label="Make"
-        />
-        <Field
-          name={`${car.Model}`}
-          type="text"
-          component={renderFieldModel}
-          label="Model"
-        />
-        <Field
-          name={`${car.Date}`}
-          type="text"
-          component={renderFieldDate}
-          label="Year"
-        />
-      </li>
-    ))}
+    {fields.map((car, index) => {
+      const ConnectedMember = connect(state => {
+        return {
+          selectedMake: selector(state, `${car}.Make`),
+          car,
+          fields,
+          index
+        };
+      })(Member);
+      return <ConnectedMember />;
+    })}
   </ul>
-);
+  );
+};
 
 // console.log('these are theModels', theModels);
 
