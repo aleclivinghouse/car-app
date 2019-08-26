@@ -139,11 +139,9 @@ const renderFieldDate = ({ label, type, meta: { touched, error } }) => (
 );
 
 const years = ["2000", "2001", "2003"];
-const makes = ["Toyota", "Nissan"];
-const models2 = {
-  Toyota: ["model Toyota 1", "model Toyota 2"],
-  Nissan: ["model Nissan 1", "model Nissa 2"]
-};
+const makes = Object.keys(this.state);
+console.log('makesss', makes);
+const models2 = this.state;
 
 const Member = ({ selectedMake, fields, car, index }) => {
   const myModels = models2[selectedMake];
@@ -166,7 +164,7 @@ const Member = ({ selectedMake, fields, car, index }) => {
             component="select"
             label="Model"
           >
-            {myModels.map((model, i) => <option key={i} value={model}>{model}</option>)}
+            {myModels.map((model, i) => <option key={i} value={model.model_name}>{model.model_name}</option>)}
           </Field>
           <Field
             name={`${car}.Date`}
