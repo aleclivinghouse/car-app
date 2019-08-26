@@ -52,54 +52,66 @@ class SelectionForm extends React.Component {
    );
 }
 
-// console.log('these are theModels', theModels);
 
-    console.log('thesse are the models', models);
-  return (
-    <form onSubmit={handleSubmit}>
-      <div>
-        <label>Favorite Color</label>
-        <div>
-          <Field name="Make" component="select">
-            <option></option>
-            <option value="ACURA">ACURA</option>
-            <option value="AUDI">AUDI</option>
-            <option value="BMW">BMW</option>
-            <option value="BUICK">BUICK</option>
-            <option value="CADILLAC">CADILLAC</option>
-            <option value="CHEVROLET">CHEVROLET</option>
-            <option value="CHRYSLER">CHRYSLER</option>
-            <option value="DODGE">DODGE</option>
-            <option value="FORD">FORD</option>
-            <option value="GMC">GMC</option>
-            <option value="HONDA">HONDA</option>
-            <option value="HYUNDAI">HYUNDAI</option>
-            <option value="JAGUAR">JAGUAR</option>
-            <option value="JEEP">JEEP</option>
-            <option value="KIA">KIA</option>
-            <option value="LEXUS">LEXUS</option>
-            <option value="LINCOLN">LINCOLN</option>
-            <option value="MAZDA">MAZDA</option>
-            <option value="MERCEDES-BENZ">MERCEDES-BENZ</option>
-            <option value="MERCURY">MERCURY</option>
-            <option value="MINI">MINI</option>
-            <option value="MITSUBISHI">MITSUBISHI</option>
-            <option value="NISSAN">NISSAN</option>
-            <option value="PORSCHE">PORSCHE</option>
-            <option value="SUBARU">SUBARU</option>
-            <option value="TOYOTA">TOYOTA</option>
-            <option value="VOLKSWAGEN">VOLKSWAGEN</option>
-            <option value="VOLVO">VOLVO</option>
-          </Field>
-        </div>
-        <div>
-            <Field name="model" component="select">
-              <option />
-              {theModels}
-            </Field>
-        </div>
-        <div>
-          <Field name="year" component="select">
+const renderFieldMake = ({ label, type, meta: { touched, error } }) => (
+  <div>
+    <label>{label}</label>
+    <div>
+        <Field name="Make" component="select">
+          <option></option>
+          <option value="ACURA">ACURA</option>
+          <option value="AUDI">AUDI</option>
+          <option value="BMW">BMW</option>
+          <option value="BUICK">BUICK</option>
+          <option value="CADILLAC">CADILLAC</option>
+          <option value="CHEVROLET">CHEVROLET</option>
+          <option value="CHRYSLER">CHRYSLER</option>
+          <option value="DODGE">DODGE</option>
+          <option value="FORD">FORD</option>
+          <option value="GMC">GMC</option>
+          <option value="HONDA">HONDA</option>
+          <option value="HYUNDAI">HYUNDAI</option>
+          <option value="JAGUAR">JAGUAR</option>
+          <option value="JEEP">JEEP</option>
+          <option value="KIA">KIA</option>
+          <option value="LEXUS">LEXUS</option>
+          <option value="LINCOLN">LINCOLN</option>
+          <option value="MAZDA">MAZDA</option>
+          <option value="MERCEDES-BENZ">MERCEDES-BENZ</option>
+          <option value="MERCURY">MERCURY</option>
+          <option value="MINI">MINI</option>
+          <option value="MITSUBISHI">MITSUBISHI</option>
+          <option value="NISSAN">NISSAN</option>
+          <option value="PORSCHE">PORSCHE</option>
+          <option value="SUBARU">SUBARU</option>
+          <option value="TOYOTA">TOYOTA</option>
+          <option value="VOLKSWAGEN">VOLKSWAGEN</option>
+          <option value="VOLVO">VOLVO</option>
+        </Field>
+      {touched && error && <span>{error}</span>}
+    </div>
+  </div>
+);
+
+const renderFieldModel = ({ label, type, meta: { touched, error } }) => (
+  <div>
+    <label>{label}</label>
+    <div>
+        <Field name="Model" component="select">
+          <option></option>
+            {theModels}
+        </Field>
+      {touched && error && <span>{error}</span>}
+    </div>
+  </div>
+);
+
+const renderFieldDate = ({ label, type, meta: { touched, error } }) => (
+  <div>
+    <label>{label}</label>
+    <div>
+        <Field name="Date" component="select">
+          <option></option>
             <option value="2019">2019</option>
               <option value="2018">2018</option>
               <option value="2017">2017</option>
@@ -120,10 +132,58 @@ class SelectionForm extends React.Component {
               <option value="2002">2002</option>
               <option value="2001">2001</option>
               <option value="2000">2000</option>
-          </Field>
-        </div>
-        <div>
+        </Field>
+      {touched && error && <span>{error}</span>}
+    </div>
+  </div>
+);
 
+
+const renderMembers = ({ fields, meta: { error, submitFailed } }) => (
+  <ul>
+    <li>
+      <button type="button" onClick={() => fields.push({})}>
+        Add A Car
+      </button>
+      {submitFailed && error && <span>{error}</span>}
+    </li>
+    {fields.map((car, index) => (
+      <li key={index}>
+        <button type="button" onClick={() => fields.remove(index)}>
+          Remove Car
+        </button>
+        <Field
+          name={`${car.Make}`}
+          type="text"
+          component={renderFieldMake}
+          label="Make"
+        />
+        <Field
+          name={`${car.Model}`}
+          type="text"
+          component={renderFieldModel}
+          label="Model"
+        />
+        <Field
+          name={`${car.Date}`}
+          type="text"
+          component={renderFieldDate}
+          label="Year"
+        />
+      </li>
+    ))}
+  </ul>
+);
+
+// console.log('these are theModels', theModels);
+
+    console.log('thesse are the models', models);
+  return (
+    <form onSubmit={handleSubmit}>
+      <div>
+        <label>Choose A Car</label>
+        <div>
+          <FieldArray name="members" component={renderMembers} />
         </div>
       <div>
         <button type="submit" disabled={pristine || submitting}>
@@ -132,7 +192,6 @@ class SelectionForm extends React.Component {
         <button type="button" disabled={pristine || submitting} onClick={reset}>
           Clear Values
         </button>
-        <button type="button" onClick={() => this.props.fields.push({})}>Add Another Model</button>
       </div>
       </div>
     </form>
