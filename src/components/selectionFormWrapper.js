@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import SelectionForm from './selectionForm';
 import {connect} from 'react-redux';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
 import {sendForm} from '.././actions/sendActions';
 
@@ -18,7 +19,9 @@ class FormWrapper extends Component{
 
   render(){
     return(
+      <MuiThemeProvider>
       <SelectionForm onSubmit={this.handleSubmit}/>
+      </MuiThemeProvider>
     );
   }
 }

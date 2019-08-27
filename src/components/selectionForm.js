@@ -2,6 +2,27 @@ import React from 'react'
 import { Field, formValueSelector, FieldArray, reduxForm } from 'redux-form'
 import {connect} from 'react-redux';
 import './selectorForm.css';
+// import Input from '@material-ui/core/Input';
+// import OutlinedInput from '@material-ui/core/OutlinedInput';
+// import FilledInput from '@material-ui/core/FilledInput';
+// import InputLabel from '@material-ui/core/InputLabel';
+import MenuItem from '@material-ui/core/MenuItem';
+// import FormHelperText from '@material-ui/core/FormHelperText';
+// import FormControl from '@material-ui/core/FormControl';
+// import Select from '@material-ui/core/Select';
+// import SelectField from 'material-ui/SelectField';
+// import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+// var injectTapEventPlugin = require("react-tap-event-plugin");
+
+import {
+  Checkbox,
+  RadioButtonGroup,
+  SelectField,
+  TextField,
+  Toggle,
+  DatePicker
+} from 'redux-form-material-ui'
+
 
 class SelectionForm extends React.Component {
   constructor(props) {
@@ -34,8 +55,7 @@ class SelectionForm extends React.Component {
          TOYOTA: [{"model_name":"4Runner","model_make_id":"Toyota"},{"model_name":"Avalon","model_make_id":"Toyota"},{"model_name":"Avalon Hybrid","model_make_id":"Toyota"},{"model_name":"Camry","model_make_id":"Toyota"},{"model_name":"Camry Hybrid","model_make_id":"Toyota"},{"model_name":"Corolla","model_make_id":"Toyota"},{"model_name":"Highlander","model_make_id":"Toyota"},{"model_name":"Highlander Hybrid","model_make_id":"Toyota"},{"model_name":"Land Cruiser","model_make_id":"Toyota"},{"model_name":"Prius","model_make_id":"Toyota"},{"model_name":"Prius c","model_make_id":"Toyota"},{"model_name":"Prius Plug-in","model_make_id":"Toyota"},{"model_name":"Prius v","model_make_id":"Toyota"},{"model_name":"RAV4","model_make_id":"Toyota"},{"model_name":"Sequoia","model_make_id":"Toyota"},{"model_name":"Sienna","model_make_id":"Toyota"},{"model_name":"Tacoma","model_make_id":"Toyota"},{"model_name":"Tundra","model_make_id":"Toyota"},{"model_name":"Venza","model_make_id":"Toyota"},{"model_name":"Yaris","model_make_id":"Toyota"}],
         VOLKSWAGEN: [{"model_name":"Beetle","model_make_id":"Volkswagen"},{"model_name":"Beetle Convertible","model_make_id":"Volkswagen"},{"model_name":"CC","model_make_id":"Volkswagen"},{"model_name":"e-Golf","model_make_id":"Volkswagen"},{"model_name":"Eos","model_make_id":"Volkswagen"},{"model_name":"Golf","model_make_id":"Volkswagen"},{"model_name":"Golf GTI","model_make_id":"Volkswagen"},{"model_name":"Golf R","model_make_id":"Volkswagen"},{"model_name":"Golf SportWagen","model_make_id":"Volkswagen"},{"model_name":"Jetta","model_make_id":"Volkswagen"},{"model_name":"Passat","model_make_id":"Volkswagen"},{"model_name":"Tiguan","model_make_id":"Volkswagen"}],
         VOLVO:[{"model_name":"S60","model_make_id":"Volvo"},{"model_name":"S80","model_make_id":"Volvo"},{"model_name":"V60","model_make_id":"Volvo"},{"model_name":"V60 Cross Country","model_make_id":"Volvo"},{"model_name":"XC60","model_make_id":"Volvo"},{"model_name":"XC70","model_make_id":"Volvo"}]
-        }
-
+      };
     }
 
   render(){
@@ -52,6 +72,21 @@ class SelectionForm extends React.Component {
      <option value={item.model_name}>{item.model_name}</option>
     );
     }
+
+    const renderSelectField = (
+      { input, label, meta: { touched, error }, children, ...custom },
+    ) => (
+      <SelectField
+        floatingLabelText={label}
+        errorText={touched && error}
+        {...input}
+        onChange={(event, index, value) => input.onChange(value)}
+        children={children}
+        {...custom}
+      />
+    );
+
+
 
 
 const renderFieldMake = ({ label, type, meta: { touched, error } }) => (
@@ -159,7 +194,7 @@ const Member = ({ selectedMake, fields, car, index }) => {
           {makes.map((make, i) => <option key={i} value={make}>{make}</option>)}
         </Field>
         {selectedMake && (
-          <div>
+          <div className="separator">
           <Field
             name={`${car}.Model`}
             component="select"
@@ -169,10 +204,11 @@ const Member = ({ selectedMake, fields, car, index }) => {
           </Field>
           <Field
             name={`${car}.Date`}
-            component="select"
+            component={SelectField}
             label="Year"
           >
-            {years.map((year, i) => <option key={i} value={year}>{year}</option>)}
+            {years.map((year, i) => <MenuItem  key = {i} value={year}  primarytext={year}>{year}</MenuItem>)}
+
           </Field>
           </div>
         )}
