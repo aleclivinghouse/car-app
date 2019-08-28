@@ -183,15 +183,7 @@ const Member = ({ selectedMake, fields, car, index }) => {
   const myModels = models2[selectedMake];
   return (
      <div>
-      <li key={index}>
-        <Field name="radius" component="select">
-          <option value="10">10</option>
-          <option value="25">25</option>
-            <option value="50">50</option>
-            <option value="100">100</option>
-            <option value="500">500</option>
-        </Field>
-      </li>
+         <div>
       <li key={index}>
         <button type="button" onClick={() => fields.remove(index)}>
           Remove Car
@@ -223,6 +215,7 @@ const Member = ({ selectedMake, fields, car, index }) => {
         )}
       </li>
       </div>
+    </div>
   );
 };
 
@@ -232,6 +225,14 @@ const renderMembers = ({ SelectionForm, fields, meta: { error, submitFailed } })
   console.log(SelectionForm);
   //const myModel = models[selectedMake];
   return (
+    <div>
+    <Field name="radius" component="select">
+      <option value="10">10</option>
+      <option value="25">25</option>
+        <option value="50">50</option>
+        <option value="100">100</option>
+        <option value="500">500</option>
+    </Field>
   <ul>
     <li>
       <button type="button" onClick={() => fields.push({})}>
@@ -251,6 +252,7 @@ const renderMembers = ({ SelectionForm, fields, meta: { error, submitFailed } })
       return <ConnectedMember />;
     })}
   </ul>
+  </div>
   );
 };
 
