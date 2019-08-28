@@ -11,7 +11,8 @@ class FormWrapper extends Component{
   constructor(props) {
     super(props);
     this.state = {
-      location: {}
+      location: {},
+      radius: ''
     }
   }
 
@@ -21,16 +22,24 @@ class FormWrapper extends Component{
   }
 
   handleSubmit = values => {
-    let start = Object.values(values)[0];
-    console.log('this is the submission',  Object.values(values));
-    let theValues = Object.values(values);
-    let str = '';
-    for(let item of theValues){
-      str+= item + ' ';
-    }
-    alert('here are the form values ' + str);
-    console.log('values', values);
-    this.props.sendForm(values);
+    let submission = Object.values(values);
+    //console.log('this is the submission', submission);
+    let cars = submission[1];
+    console.log(cars, 'the cars');
+    this.setState({radius: submission[0]}, () => {
+      for(let car of cars){
+        let newObj = {};
+        console.log(car);
+        newObj.make = car.Make.toLowerCase();
+        newObj.model = car.Model.toLowerCase();
+        newObj.year = car.Date;
+        newObj.radius = this.state.radius;
+        newObj.lat = this.state.location.lat;
+        newObj.lng = this.state.location.lng;
+        console.log('this is the new object', newObj);
+         this.props.sendForm(newObj);
+      }
+    });
   }
 
   render(){
@@ -38,7 +47,6 @@ class FormWrapper extends Component{
     return(
       <MuiThemeProvider>
       <SelectionForm onSubmit={this.handleSubmit}/>
-
       </MuiThemeProvider>
     );
   }

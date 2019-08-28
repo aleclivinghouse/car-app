@@ -226,13 +226,6 @@ const renderMembers = ({ SelectionForm, fields, meta: { error, submitFailed } })
   //const myModel = models[selectedMake];
   return (
     <div>
-    <Field name="radius" component="select">
-      <option value="10">10</option>
-      <option value="25">25</option>
-        <option value="50">50</option>
-        <option value="100">100</option>
-        <option value="500">500</option>
-    </Field>
   <ul>
     <li>
       <button type="button" onClick={() => fields.push({})}>
@@ -263,6 +256,15 @@ const renderMembers = ({ SelectionForm, fields, meta: { error, submitFailed } })
     <form onSubmit={handleSubmit}>
       <div>
         <label>Choose A Car</label>
+        <div>
+          <Field name="radius" component="select" label="radius">
+            <option value="10">10</option>
+            <option value="25">25</option>
+              <option value="50">50</option>
+              <option value="100">100</option>
+              <option value="500">500</option>
+          </Field>
+        </div>
         <div>
           <FieldArray name="members" component={renderMembers} />
         </div>

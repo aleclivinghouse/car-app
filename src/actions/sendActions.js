@@ -3,7 +3,8 @@ import {SEND_FORM, GET_ERRORS} from './types';
 
 //0xjgQHUmuKh1YL3JeeKrIvtfF7yUtRDr
 export const sendForm = data => dispatch => {
-  const url = "http://marketcheck-prod.apigee.net/v1/search?api_key=0xjgQHUmuKh1YL3JeeKrIvtfF7yUtRDr&year=2014&make=ford&latitude=34.05&longitude=-118.24&radius=100&car_type=used&start=0&rows=2&seller_type=dealer";
+  console.log('this is the data in the action ', data);
+  const url = `http://marketcheck-prod.apigee.net/v1/search?api_key=0xjgQHUmuKh1YL3JeeKrIvtfF7yUtRDr&year=${data.year}&make=${data.make}&latitude=${data.lat}&longitude=${data.lng}&radius=${data.radius}&car_type=used&start=0&rows=2&seller_type=dealer`;
   axios
     .get(url, {
       headers: {
@@ -17,12 +18,7 @@ export const sendForm = data => dispatch => {
         payload: res.data
       })
     })
-    .catch(err =>
-      dispatch({
-         type: GET_ERRORS,
-         payload: err.response.data
-      })
-    );
+    .catch(err =>console.log(err));
 }
 
 
