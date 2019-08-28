@@ -182,6 +182,16 @@ const models2 = this.state;
 const Member = ({ selectedMake, fields, car, index }) => {
   const myModels = models2[selectedMake];
   return (
+     <div>
+      <li key={index}>
+        <Field name="radius" component="select">
+          <option value="10">10</option>
+          <option value="25">25</option>
+            <option value="50">50</option>
+            <option value="100">100</option>
+            <option value="500">500</option>
+        </Field>
+      </li>
       <li key={index}>
         <button type="button" onClick={() => fields.remove(index)}>
           Remove Car
@@ -212,6 +222,7 @@ const Member = ({ selectedMake, fields, car, index }) => {
           </div>
         )}
       </li>
+      </div>
   );
 };
 
