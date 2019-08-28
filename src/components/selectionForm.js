@@ -205,9 +205,16 @@ const Member = ({ selectedMake, fields, car, index }) => {
             {myModels.map((model, i) => <option key={i} value={model.model_name}>{model.model_name}</option>)}
           </Field>
           <Field
-            name={`${car}.Date`}
+            name={`${car}.Date1`}
             component='select'
-            label="Year"
+            label="First Year"
+          >
+            {years.map((year, i) => <option  key = {i} value={year} >{year}</option>)}
+          </Field>
+          <Field
+            name={`${car}.Date2`}
+            component='select'
+            label="Last Year"
           >
             {years.map((year, i) => <option  key = {i} value={year} >{year}</option>)}
           </Field>
