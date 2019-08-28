@@ -4,7 +4,7 @@ import {SEND_FORM, GET_ERRORS} from './types';
 //0xjgQHUmuKh1YL3JeeKrIvtfF7yUtRDr
 export const sendForm = data => dispatch => {
   console.log('this is the data in the action ', data);
-  const url = `http://marketcheck-prod.apigee.net/v1/search?api_key=0xjgQHUmuKh1YL3JeeKrIvtfF7yUtRDr&year=${data.year}&make=${data.make}&latitude=${data.lat}&longitude=${data.lng}&radius=${data.radius}&car_type=used&start=0&rows=2&seller_type=dealer`;
+  const url = `http://marketcheck-prod.apigee.net/v1/search?api_key=0xjgQHUmuKh1YL3JeeKrIvtfF7yUtRDr&year=${data.year}&make=${data.make}&model=${data.model}&latitude=${data.lat}&longitude=${data.lng}&radius=${data.radius}`;
   axios
     .get(url, {
       headers: {
