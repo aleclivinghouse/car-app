@@ -204,11 +204,10 @@ const Member = ({ selectedMake, fields, car, index }) => {
           </Field>
           <Field
             name={`${car}.Date`}
-            component={SelectField}
+            component='select'
             label="Year"
           >
-            {years.map((year, i) => <MenuItem  key = {i} value={year}  primarytext={year}>{year}</MenuItem>)}
-
+            {years.map((year, i) => <option  key = {i} value={year} >{year}</option>)}
           </Field>
           </div>
         )}
