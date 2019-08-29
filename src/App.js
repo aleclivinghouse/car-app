@@ -2,12 +2,13 @@ import React from 'react';
 import logo from './logo.svg';
 import './App.css';
 import SelectionFormWrapper from './components/selectionFormWrapper';
+import ScatterPlot from './components/ScatterPlot';
 import {Provider} from 'react-redux';
 import {createStore, applyMiddleware} from 'redux';
 import ReduxThunk from 'redux-thunk';
 import reducers from './reducers';
 import { geolocated } from "react-geolocated";
-import GeoLocation from './components/geoLocation';
+
 
 class App extends React.Component{
   constructor(props) {
@@ -31,7 +32,8 @@ class App extends React.Component{
     <Provider store={store}>
     <div className="App">
       <SelectionFormWrapper latitude={this.state.lat} longitude={this.state.long}/>
-    </div>
+      <ScatterPlot />
+  </div>
     </Provider>
   );
  }
