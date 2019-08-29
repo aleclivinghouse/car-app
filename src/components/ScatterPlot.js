@@ -13,15 +13,32 @@ class ScatterPlot extends React.Component{
   }
 
 
+componentWillReceiveProps(nextProps, prevProps){
+  const cars = nextProps.carData.length ? nextProps.carData[0].listings : [];
+  const newArr = cars.map(car => ({x: car.price, y: car.miles}));
+  console.log('this is newArr nextProps', newArr);
+  if(Object.keys(this.state.chartData).length===0){
+    this.setState({chartData: newArr});
+  } else {
+    console.log('this is firing');
+    console.log('chart data before', this.state.chartData);
+    this.setState({chartData: [...this.state.chartData, ...newArr]}, ()=>{
+        console.log('chart data after', this.state.chartData);
+    });
+
+ }
+}
 
 
   render(){
-    const cars = this.props.carData.length ? this.props.carData[0].listings : [];
-
-    console.log('these are the cars', cars);
-
-    const newArr = cars.map(car => ({x: car.price, y: car.miles}))
-    console.log('this is newArr', newArr);
+    // const cars = this.props.carData.length ? this.props.carData[0].listings : [];
+    //
+    // console.log('these are the cars', cars);
+    //
+    // const newArr = cars.map(car => ({x: car.price, y: car.miles}))
+    // console.log('this is newArr', newArr);
+    //
+    // this.setState({chartData: newArr});
 
     const data = {
   labels: ['Scatter'],
@@ -39,7 +56,7 @@ class ScatterPlot extends React.Component{
       pointHoverBorderWidth: 2,
       pointRadius: 10,
       pointHitRadius: 50,
-      data: newArr
+      data: this.state.chartData
     }
   ]
 };
