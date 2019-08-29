@@ -37,11 +37,11 @@ class FormWrapper extends Component{
         let secondYearIndex;
         let yearsSelected  = [];
         for(let i = 0; i < years.length; i++){
-          if(years[i] === car.Date1){
+          if(years[i] === car.Date1.value){
             console.log('firing');
             firstYearIndex = i;
           }
-          if(years[i] === car.Date2){
+          if(years[i] === car.Date2.value){
             console.log('firing');
             secondYearIndex = i +1;
           }
@@ -57,10 +57,10 @@ class FormWrapper extends Component{
 
         let newObj = {};
         console.log('this is the car from the form ', car);
-        newObj.make = car.Make.toLowerCase();
-        newObj.model = car.Model.toLowerCase();
+        newObj.make = car.Make.value.toLowerCase();
+        newObj.model = car.Model.value;
         newObj.year = yearsString;
-        newObj.radius = this.state.radius;
+        newObj.radius = this.state.radius.value;
         newObj.lat = this.state.location.lat;
         newObj.lng = this.state.location.lng;
         console.log('this is the new object', newObj);

@@ -1,7 +1,7 @@
 import React from 'react'
 import { Field, formValueSelector, FieldArray, reduxForm } from 'redux-form'
 import {connect} from 'react-redux';
-import './selectorForm.css';
+// import './selectorForm.css';
 // import Input from '@material-ui/core/Input';
 // import OutlinedInput from '@material-ui/core/OutlinedInput';
 // import FilledInput from '@material-ui/core/FilledInput';
@@ -13,6 +13,8 @@ import MenuItem from '@material-ui/core/MenuItem';
 // import SelectField from 'material-ui/SelectField';
 // import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 // var injectTapEventPlugin = require("react-tap-event-plugin");
+import Select from 'react-select'
+
 
 import {
   Checkbox,
@@ -174,13 +176,39 @@ const renderFieldDate = ({ label, type, meta: { touched, error } }) => (
   </div>
 );
 
+const ReduxFormSelect = props => {
+  const { input, options} = props;
+
+  return (
+    <div style={{width:200, display:'inline-block' }}>
+    <Select
+      {...input}
+      onChange={value => input.onChange(value)}
+      onBlur={() => input.onBlur(input.value)}
+      options={options}
+      autosize={true}
+    />
+  </div>
+  )
+}
+
 const years = ["2000", "2001", "2003", "2004", "2005", "2006", "2007", "2008", "2009", "2010", "2011", "2012", "2013", "2014", "2015", "2016", "2017", "2018", "2019"];
 const makes = Object.keys(this.state);
 console.log('makesss', makes);
 const models2 = this.state;
 
 const Member = ({ selectedMake, fields, car, index }) => {
-  const myModels = models2[selectedMake];
+  const yearOptions = years.map(year => ({label: year, value: year}));
+  const makeOptions = makes.map(make => ({label: make, value: make}));
+  console.log(makeOptions, 'makeOptions');
+  let modelOptions = [];
+
+  let myModels = models2[selectedMake];
+  console.log('this is my models', myModels);
+  if(myModels !== undefined){
+    console.log('THIS STILL WORKS');
+    modelOptions = myModels.map(model => ({label:model.model_name, value: model.model_name}));
+  }
   return (
      <div>
          <div>
@@ -190,33 +218,36 @@ const Member = ({ selectedMake, fields, car, index }) => {
         </button>
         <Field
           name={`${car}.Make`}
-          component="select"
+          component={ReduxFormSelect}
+          options={makeOptions}
           label="Make"
         >
-          {makes.map((make, i) => <option key={i} value={make}>{make}</option>)}
+          // {makes.map((make, i) => <option key={i} value={make}>{make}</option>)}
         </Field>
         {selectedMake && (
           <div className="separator">
-          <Field
-            name={`${car}.Model`}
-            component="select"
-            label="Model"
-          >
-            {myModels.map((model, i) => <option key={i} value={model.model_name}>{model.model_name}</option>)}
+            <Field
+              name={`${car}.Model`}
+              component={ReduxFormSelect}
+              options={modelOptions}
+              label="Model"
+            >
+            // {myModels.map((model, i) => <option key={i} value={model.model_name}>{model.model_name}</option>)}
           </Field>
           <Field
             name={`${car}.Date1`}
-            component='select'
+            component={ReduxFormSelect}
+            options={yearOptions}
             label="First Year"
           >
-            {years.map((year, i) => <option  key = {i} value={year} >{year}</option>)}
+            //{years.map((year, i) => <option  key = {i} value={year} >{year}</option>)}
           </Field>
           <Field
             name={`${car}.Date2`}
-            component='select'
-            label="Last Year"
+            component={ReduxFormSelect}
+            options={yearOptions}
           >
-            {years.map((year, i) => <option  key = {i} value={year} >{year}</option>)}
+            //{years.map((year, i) => <option  key = {i} value={year} >{year}</option>)}
           </Field>
           </div>
         )}
@@ -231,6 +262,7 @@ const renderMembers = ({ SelectionForm, fields, meta: { error, submitFailed } })
   console.log('form');
   console.log(SelectionForm);
   //const myModel = models[selectedMake];
+  console.log(fields, 'FIELDS HERE');
   return (
     <div>
   <ul>
@@ -240,15 +272,18 @@ const renderMembers = ({ SelectionForm, fields, meta: { error, submitFailed } })
       </button>
       {submitFailed && error && <span>{error}</span>}
     </li>
+
     {fields.map((car, index) => {
       const ConnectedMember = connect(state => {
+        console.log(car, 'CAR HERE')
+        console.log(selector(state, `${car}.Make.value`), 'SELECTOR STATE');
         return {
-          selectedMake: selector(state, `${car}.Make`),
+          selectedMake: selector(state, `${car}.Make.value`),
           car,
           fields,
           index
         };
-      })(Member);
+      }, null)(Member);
       return <ConnectedMember />;
     })}
   </ul>
@@ -259,17 +294,18 @@ const renderMembers = ({ SelectionForm, fields, meta: { error, submitFailed } })
 // console.log('these are theModels', theModels);
 
     console.log('thesse are the models', models);
+    const radiusOptions = [{label: "10", value:"10"}, {label: "25", value:"25"}, {label: "50", value:"50"}, {label: "100", value:"100"}, {label: "500", value:"500"}];
   return (
     <form onSubmit={handleSubmit}>
       <div>
         <label>Choose A Car</label>
         <div>
-          <Field name="radius" component="select" label="radius">
-            <option value="10">10</option>
-            <option value="25">25</option>
-              <option value="50">50</option>
-              <option value="100">100</option>
-              <option value="500">500</option>
+          <Field name="radius"
+            component={ReduxFormSelect}
+            label="radius"
+            options={radiusOptions}
+            >
+
           </Field>
         </div>
         <div>
