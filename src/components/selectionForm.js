@@ -1,20 +1,13 @@
 import React from 'react'
 import { Field, formValueSelector, FieldArray, reduxForm } from 'redux-form'
 import {connect} from 'react-redux';
-// import './selectorForm.css';
-// import Input from '@material-ui/core/Input';
-// import OutlinedInput from '@material-ui/core/OutlinedInput';
-// import FilledInput from '@material-ui/core/FilledInput';
-// import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
-// import FormHelperText from '@material-ui/core/FormHelperText';
-// import FormControl from '@material-ui/core/FormControl';
-// import Select from '@material-ui/core/Select';
-// import SelectField from 'material-ui/SelectField';
-// import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-// var injectTapEventPlugin = require("react-tap-event-plugin");
-import Select from 'react-select'
-
+import Select from 'react-select';
+import { makeStyles } from '@material-ui/core/styles';
+import Button from '@material-ui/core/Button';
+import Fab from '@material-ui/core/Fab';
+import AddIcon from '@material-ui/icons/Add';
+import DeleteIcon from '@material-ui/icons/Delete';
 
 import {
   Checkbox,
@@ -213,9 +206,9 @@ const Member = ({ selectedMake, fields, car, index }) => {
      <div>
          <div>
       <li key={index}>
-        <button type="button" onClick={() => fields.remove(index)}>
-          Remove Car
-        </button>
+        <Fab type="button" variant="extended"  size="small" color="primary" onClick={() => fields.remove(index)}>
+          <DeleteIcon />
+        </Fab>
         <Field
           name={`${car}.Make`}
           component={ReduxFormSelect}
@@ -225,7 +218,7 @@ const Member = ({ selectedMake, fields, car, index }) => {
           // {makes.map((make, i) => <option key={i} value={make}>{make}</option>)}
         </Field>
         {selectedMake && (
-          <div className="separator">
+          <div className="separator" style={{display: "inline-block"}}>
             <Field
               name={`${car}.Model`}
               component={ReduxFormSelect}
@@ -267,9 +260,9 @@ const renderMembers = ({ SelectionForm, fields, meta: { error, submitFailed } })
     <div>
   <ul>
     <li>
-      <button type="button" onClick={() => fields.push({})}>
-        Add A Car
-      </button>
+      <Fab type="button"  color="primary" style={{display: "inline-block", marginLeft: -35, marginRight:10, marginHeight: 10, marginBottom: 10}} onClick={() => fields.push({})}>
+        <AddIcon />
+      </Fab>
       {submitFailed && error && <span>{error}</span>}
     </li>
 
@@ -298,7 +291,7 @@ const renderMembers = ({ SelectionForm, fields, meta: { error, submitFailed } })
   return (
     <form onSubmit={handleSubmit}>
       <div>
-        <label>Choose A Car</label>
+        <label>How far are you willing to drive?</label>
         <div>
           <Field name="radius"
             component={ReduxFormSelect}
@@ -312,12 +305,12 @@ const renderMembers = ({ SelectionForm, fields, meta: { error, submitFailed } })
           <FieldArray name="members" component={renderMembers} />
         </div>
       <div>
-        <button type="submit" disabled={pristine || submitting}>
+        <Button type="submit" variant="contained" color="primary" disabled={pristine || submitting}>
           Submit
-        </button>
-        <button type="button" disabled={pristine || submitting} onClick={reset}>
+        </Button>
+        <Button type="button" variant="outlined" color="primary" disabled={pristine || submitting} onClick={reset}>
           Clear Values
-        </button>
+        </Button>
       </div>
       </div>
     </form>
