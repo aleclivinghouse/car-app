@@ -7,6 +7,7 @@ import {Provider} from 'react-redux';
 import {createStore, applyMiddleware} from 'redux';
 import ReduxThunk from 'redux-thunk';
 import reducers from './reducers';
+import Cards from './components/cards';
 import { geolocated } from "react-geolocated";
 
 
@@ -33,6 +34,7 @@ class App extends React.Component{
     <div className="App">
       <SelectionFormWrapper latitude={this.state.lat} longitude={this.state.long}/>
       <ScatterPlot />
+      <Cards />
   </div>
     </Provider>
   );

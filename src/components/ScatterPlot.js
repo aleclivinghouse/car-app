@@ -2,6 +2,7 @@ import React from 'react';
 import {Scatter} from 'react-chartjs-2';
 import {connect} from 'react-redux';
 import {SEND_FORM} from '../actions/types';
+import {addSelectedCar} from '../actions';
 
 
 class ScatterPlot extends React.Component{
@@ -72,7 +73,8 @@ componentWillReceiveProps(nextProps, prevProps){
         getElementsAtEvent={(elems, event) => {this.setState({elements: elems}, ()=>{
           let theIndex = this.state.elements[0]._index;
           console.log('this is the car data', this.state.cars[theIndex]);
-            this.setState({selectedCars: [...this.state.selectedCars, this.state.cars[theIndex]]});
+            // this.setState({selectedCars: [...this.state.selectedCars, this.state.cars[theIndex]]});
+            this.props.addSelectedCar(this.state.cars[theIndex]);
         })}}
          height={300} options={{   responsive: true,
            title: {
@@ -116,4 +118,4 @@ const mapStateToProps = state => {
   }
 }
 
-export default connect(mapStateToProps)(ScatterPlot);
+export default connect(mapStateToProps, {addSelectedCar})(ScatterPlot);
