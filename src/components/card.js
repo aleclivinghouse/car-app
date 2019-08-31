@@ -27,18 +27,13 @@ class CardItem extends React.Component {
     constructor(props){
       super(props);
       this.state = {
-        toggle: false
+        on: false
       };
     }
 
     toggleSpecs(){
-      console.log('this is firing in collapse');
-      if(this.state.toggle=== true){
-        this.setState({toggle: false})
-      }
-      if(this.state.toggle=== false){
-        this.setState({toggle: true})
-      }
+      console.log('toggle specs firing');
+      this.setState({on: !this.state.on})
     }
 
     render(){
@@ -79,7 +74,8 @@ class CardItem extends React.Component {
                       <TableCell>Specs</TableCell>
                     </TableRow>
                   </TableHead>
-                  <TableBody className="expandible" expandable={true}>
+                    {this.state.on &&(
+                  <TableBody>
                     {rows.map(row =>
                       <TableRow>
                       <TableCell align="right">{row.miles}</TableCell>
@@ -93,13 +89,14 @@ class CardItem extends React.Component {
                       </TableRow>
                     )}
                   </TableBody>
+                  )}
                 </Table>
                 </Typography>
               </CardContent>
             </CardActionArea>
             <CardActions>
-          <Button size="small" color="primary" actAsExpander={true} onCLick={this.toggleSpecs.bind(this)}>
-            Share
+          <Button size="small" color="primary"  onClick={this.toggleSpecs.bind(this)}>
+            Toggle
           </Button>
         </CardActions>
           </Card>
