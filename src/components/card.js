@@ -36,6 +36,10 @@ class CardItem extends React.Component {
       this.setState({on: !this.state.on})
     }
 
+    pictures(){
+
+    }
+
     render(){
       let car = this.props.car;
       function createData(miles, price, carfax, dealerLocation, vimNumber, dealerWebsite, engine, highwayMiles){
@@ -56,7 +60,7 @@ class CardItem extends React.Component {
       return(
         <div>
         {this.props.car ? (
-          <Card>
+          <Card style={{width: "80%", marginBottom: 50}}>
           <CardActionArea>
               <CardMedia
                 image={this.props.car.media.photo_links[0]}
@@ -97,6 +101,9 @@ class CardItem extends React.Component {
             <CardActions>
           <Button size="small" color="primary"  onClick={this.toggleSpecs.bind(this)}>
             Toggle
+          </Button>
+          <Button size="small" color="primary"  onClick={this.pictures.bind(this)}>
+            View More Pictures
           </Button>
         </CardActions>
           </Card>

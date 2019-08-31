@@ -24,12 +24,10 @@ class FormWrapper extends Component{
   handleSubmit = values => {
     let submission = Object.values(values);
     //console.log('this is the submission', submission);
-    let cars = submission[1];
-    console.log(cars, 'the cars');
     this.setState({radius: submission[0]}, () => {
+    let cars = submission[1];
 
-
-      for(let car of cars){
+      cars.map((car) => {
         let years = ["2000", "2001", "2003", "2004", "2005", "2006", "2007", "2008", "2009", "2010", "2011", "2012", "2013", "2014", "2015", "2016", "2017", "2018", "2019"];
         let firstYear;
         let secondYear;
@@ -65,7 +63,7 @@ class FormWrapper extends Component{
         newObj.lng = this.state.location.lng;
         console.log('this is the new object', newObj);
          this.props.sendForm(newObj);
-      }
+      });
     });
   }
 
