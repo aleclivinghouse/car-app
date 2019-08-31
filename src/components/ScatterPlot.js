@@ -10,7 +10,7 @@ class ScatterPlot extends React.Component{
     super(props);
       this.state = {
         chartData: [],
-        elements: [],
+        elements: {},
         cars: [],
         selectedCars: []
       }
@@ -60,7 +60,7 @@ componentWillReceiveProps(nextProps, prevProps){
       pointHoverBorderColor: 'rgba(220,220,220,1)',
       pointHoverBorderWidth: 2,
       pointRadius: 5,
-      pointHitRadius: 50,
+      pointHitRadius: 5,
       data: this.state.chartData
     }
   ]
@@ -68,15 +68,23 @@ componentWillReceiveProps(nextProps, prevProps){
 
 
     return(
-      <div style={{width: 600, marginLeft: 200}}>
+      <div style={{width: 1000, marginLeft: 200}}>
         <Scatter data={theData} width={400}
-        getElementsAtEvent={(elems, event) => {this.setState({elements: elems}, ()=>{
-          let theIndex = this.state.elements[0]._index;
+        getElementAtEvent={(elems, event) => {this.setState({elements: elems}, ()=>{
+          console.log('this is the elements', this.state.elements);
+          let theIndex;
+          if(this.state.elements[0] !== undefined){
+           theIndex = this.state.elements[0]._index || 0;
+
+          console.log('theIndex', theIndex);
           console.log('this is the car data', this.state.cars[theIndex]);
-            // this.setState({selectedCars: [...this.state.selectedCars, this.state.cars[theIndex]]});
+            this.setState({selectedCars: [...this.state.selectedCars, this.state.cars[theIndex]]});
             this.props.addSelectedCar(this.state.cars[theIndex]);
+          }
         })}}
-         height={300} options={{   responsive: true,
+         height={400} options={{
+           responsive: true,
+           maintainAspectRatio: false,
            title: {
              display: true,
              text: 'Chart.js Line Chart'
