@@ -21,13 +21,15 @@ import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Collapse from '@material-ui/core/Collapse';
+import Carousel, { Modal, ModalGateway } from 'react-images';
 
 
 class CardItem extends React.Component {
     constructor(props){
       super(props);
       this.state = {
-        on: false
+        on: false,
+        modalIsOpen: false
       };
     }
 
@@ -36,12 +38,15 @@ class CardItem extends React.Component {
       this.setState({on: !this.state.on})
     }
 
-    pictures(){
 
+    toggleModal = () => {
+      this.setState(state => ({ modalIsOpen: !state.modalIsOpen }));
     }
 
     render(){
       let car = this.props.car;
+      console.log(this.props.car.media.photo_links, "photos");
+      const forCarousel = this.props.car.media.photo_links.map(photo => ({src:photo}));
       function createData(miles, price, carfax, dealerLocation, vimNumber, dealerWebsite, engine, highwayMiles){
         return {miles, price, carfax, dealerLocation, vimNumber, dealerWebsite, engine, highwayMiles};
       }
@@ -60,6 +65,14 @@ class CardItem extends React.Component {
       return(
         <div>
         {this.props.car ? (
+          <div>
+              <ModalGateway>
+           {this.state.modalIsOpen ? (
+             <Modal onClose={this.toggleModal.bind(this)}>
+               <Carousel views={forCarousel} />
+             </Modal>
+           ) : null}
+         </ModalGateway>
           <Card style={{width: "80%", marginBottom: 50}}>
           <CardActionArea>
               <CardMedia
@@ -102,11 +115,12 @@ class CardItem extends React.Component {
           <Button size="small" color="primary"  onClick={this.toggleSpecs.bind(this)}>
             Toggle
           </Button>
-          <Button size="small" color="primary"  onClick={this.pictures.bind(this)}>
-            View More Pictures
-          </Button>
+            <Button size="small" color="primary"  onClick={this.toggleModal.bind(this)}>
+              View More Pictures
+            </Button>
         </CardActions>
           </Card>
+        </div>
         ): null}
       </div>
       )

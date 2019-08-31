@@ -15,6 +15,7 @@
     "react-dom": "^16.9.0",
     "react-geolocated": "^2.5.1",
     "react-geolocation": "^1.0.4",
+    "react-images": "^1.0.0",
     "react-motion": "^0.5.2",
     "react-redux": "^7.1.0",
     "react-scripts": "3.1.1",
