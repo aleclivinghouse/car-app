@@ -22,6 +22,7 @@ class FormWrapper extends Component{
   }
 
   handleSubmit = values => {
+    console.log(values, 'handleSubmit');
     let submission = Object.values(values);
     //console.log('this is the submission', submission);
     this.setState({radius: submission[0]}, () => {

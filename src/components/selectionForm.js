@@ -180,6 +180,7 @@ const ReduxFormSelect = props => {
       onBlur={() => input.onBlur(input.value)}
       options={options}
       autosize={true}
+      defaultValue={options[0]}
     />
   </div>
   )
@@ -260,7 +261,7 @@ const renderMembers = ({ SelectionForm, fields, meta: { error, submitFailed } })
     <div>
   <ul>
     <li>
-      <Fab type="button"  color="primary" style={{display: "inline-block", marginLeft: -35, marginRight:10, marginHeight: 10, marginBottom: 10}} onClick={() => fields.push({})}>
+      <Fab type="button"  color="primary" size="small" style={{display: "inline-block", marginLeft: -35, marginRight:10, marginHeight: 10, marginBottom: -50, position: 'relative', top:-70, left: 140, width: 50, height: 50}} onClick={() => fields.push({})}>
         <AddIcon />
       </Fab>
       {submitFailed && error && <span>{error}</span>}
@@ -287,7 +288,7 @@ const renderMembers = ({ SelectionForm, fields, meta: { error, submitFailed } })
 // console.log('these are theModels', theModels);
 
     console.log('thesse are the models', models);
-    const radiusOptions = [{label: "10", value:"10"}, {label: "25", value:"25"}, {label: "50", value:"50"}, {label: "100", value:"100"}, {label: "500", value:"500"}];
+    const radiusOptions = [{label: "10 miles", value:"10"}, {label: "25 miles", value:"25"},{label: "50 miles", value:"50"}];
   return (
     <form onSubmit={handleSubmit}>
       <div>
