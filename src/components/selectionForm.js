@@ -101,14 +101,17 @@ const validate = values => {
 }
 
 
-const years = ["2000", "2001", "2003", "2004", "2005", "2006", "2007", "2008", "2009", "2010", "2011", "2012", "2013", "2014", "2015", "2016", "2017", "2018", "2019"];
+const years = ["2000", "2001", "2002", "2003", "2004", "2005", "2006", "2007", "2008", "2009", "2010", "2011", "2012", "2013", "2014", "2015", "2016", "2017", "2018", "2019"];
+const miles = ["10000", "20000", "30000","40000", "50000", "60000", "70000", "80000", "90000", "100000", '110000', '120000','130000', '140000'];
+const prices = ["5000", '10000', '15000', '20000', '25000', '30000', '35000', '40000', '45000', '50000', '60000', '70000', '80000', '90000', '100000']
 const makes = Object.keys(this.state);
 console.log('makesss', makes);
 const models2 = this.state;
-
 const Member = ({ selectedMake, fields, car, index, validate }) => {
   const yearOptions = years.map(year => ({label: year, value: year}));
   const makeOptions = makes.map(make => ({label: make, value: make}));
+  const priceOptions = prices.map(price => ({label: price, value: price}));
+  const mileOptions = miles.map(mile => ({label: mile, value: mile}));
   console.log(makeOptions, 'makeOptions');
   let modelOptions = [];
 
@@ -177,7 +180,7 @@ const renderMembers = ({ SelectionForm, fields, meta: { error, submitFailed } })
     <div>
   <ul>
     <li>
-      <Fab type="button"  color="primary" size="small" style={{display: "inline-block", marginLeft: -35, marginRight:10, marginHeight: 10, marginBottom: -50, position: 'relative', top:-70, left: 140, width: 50, height: 50}} onClick={() => fields.push({})}>
+      <Fab type="button"  color="primary" size="small" style={{display: "inline-block"}} onClick={() => fields.push({})}>
         <AddIcon />
       </Fab>
       {submitFailed && error && <span>{error}</span>}
@@ -204,10 +207,14 @@ const renderMembers = ({ SelectionForm, fields, meta: { error, submitFailed } })
 // console.log('these are theModels', theModels);
 
     console.log('thesse are the models', models);
+    const theMiles = ["10000", "20000", "30000","40000", "50000", "60000", "70000", "80000", "90000", "100000", '110000', '120000','130000', '140000'];
+    const thePrices = ["5000", '10000', '15000', '20000', '25000', '30000', '35000', '40000', '45000', '50000', '60000', '70000', '80000', '90000', '100000']
     const radiusOptions = [{label: "10 miles", value:"10"}, {label: "25 miles", value:"25"},{label: "50 miles", value:"50"}];
+    const priceOptions = thePrices.map(price => ({label: price, value: price}));
+    const mileOptions = theMiles.map(mile => ({label: mile, value: mile}));
   return (
     <form onSubmit={handleSubmit}>
-      <div>
+      <div style={{display: "inline-block"}}>
         <label>How far are you willing to drive?</label>
         <div>
           <Field name="radius"
@@ -215,7 +222,28 @@ const renderMembers = ({ SelectionForm, fields, meta: { error, submitFailed } })
             label="radius"
             options={radiusOptions}
             >
-
+          </Field>
+        </div>
+        <div style={{display: "inline-block"}}>
+          <div>
+              <label>How much are you willing to spend?</label>
+          </div>
+          <Field name="price"
+            component={ReduxFormSelect}
+            label="price"
+            options={priceOptions}
+            >
+          </Field>
+        </div>
+        <div style={{display: "inline-block"}}>
+          <div>
+            <label>What is your top  mileage?</label>
+          </div>
+          <Field name="miles"
+            component={ReduxFormSelect}
+            label="miles"
+            options={mileOptions}
+            >
           </Field>
         </div>
         <div>
