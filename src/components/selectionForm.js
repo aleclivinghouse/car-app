@@ -68,109 +68,8 @@ class SelectionForm extends React.Component {
     );
     }
 
-    const renderSelectField = (
-      { input, label, meta: { touched, error }, children, ...custom },
-    ) => (
-      <SelectField
-        floatingLabelText={label}
-        errorText={touched && error}
-        {...input}
-        onChange={(event, index, value) => input.onChange(value)}
-        children={children}
-        {...custom}
-      />
-    );
-
-
-
-
-const renderFieldMake = ({ label, type, meta: { touched, error } }) => (
-  <div>
-    <label>{label}</label>
-    <div>
-        <Field name="Make" component="select">
-          <option></option>
-          <option value="ACURA">ACURA</option>
-          <option value="AUDI">AUDI</option>
-          <option value="BMW">BMW</option>
-          <option value="BUICK">BUICK</option>
-          <option value="CADILLAC">CADILLAC</option>
-          <option value="CHEVROLET">CHEVROLET</option>
-          <option value="CHRYSLER">CHRYSLER</option>
-          <option value="DODGE">DODGE</option>
-          <option value="FORD">FORD</option>
-          <option value="GMC">GMC</option>
-          <option value="HONDA">HONDA</option>
-          <option value="HYUNDAI">HYUNDAI</option>
-          <option value="JAGUAR">JAGUAR</option>
-          <option value="JEEP">JEEP</option>
-          <option value="KIA">KIA</option>
-          <option value="LEXUS">LEXUS</option>
-          <option value="LINCOLN">LINCOLN</option>
-          <option value="MAZDA">MAZDA</option>
-          <option value="MERCEDES-BENZ">MERCEDES-BENZ</option>
-          <option value="MERCURY">MERCURY</option>
-          <option value="MINI">MINI</option>
-          <option value="MITSUBISHI">MITSUBISHI</option>
-          <option value="NISSAN">NISSAN</option>
-          <option value="PORSCHE">PORSCHE</option>
-          <option value="SUBARU">SUBARU</option>
-          <option value="TOYOTA">TOYOTA</option>
-          <option value="VOLKSWAGEN">VOLKSWAGEN</option>
-          <option value="VOLVO">VOLVO</option>
-        </Field>
-      {touched && error && <span>{error}</span>}
-    </div>
-  </div>
-);
-
-const renderFieldModel = ({ label, type, meta: { touched, error } }) => (
-  <div>
-    <label>{label}</label>
-    <div>
-        <Field name="Model" component="select">
-          <option></option>
-            {theModels}
-        </Field>
-      {touched && error && <span>{error}</span>}
-    </div>
-  </div>
-);
-
-const renderFieldDate = ({ label, type, meta: { touched, error } }) => (
-  <div>
-    <label>{label}</label>
-    <div>
-        <Field name="Date" component="select">
-          <option></option>
-            <option value="2019">2019</option>
-              <option value="2018">2018</option>
-              <option value="2017">2017</option>
-              <option value="2016">2016</option>
-              <option value="2015">2015</option>
-              <option value="2014">2014</option>
-              <option value="2013">2013</option>
-              <option value="2012">2012</option>
-              <option value="2011">2011</option>
-              <option value="2010">2010</option>
-              <option value="2009">2009</option>
-              <option value="2008">2008</option>
-              <option value="2007">2007</option>
-              <option value="2006">2006</option>
-              <option value="2005">2005</option>
-              <option value="2004">2004</option>
-              <option value="2003">2003</option>
-              <option value="2002">2002</option>
-              <option value="2001">2001</option>
-              <option value="2000">2000</option>
-        </Field>
-      {touched && error && <span>{error}</span>}
-    </div>
-  </div>
-);
-
 const ReduxFormSelect = props => {
-  const { input, options} = props;
+  const { input, options, meta: {touched, error, warning}} = props;
 
   return (
     <div style={{width:200, display:'inline-block' }}>
@@ -182,16 +81,32 @@ const ReduxFormSelect = props => {
       autosize={true}
       defaultValue={options[0]}
     />
+    {touched &&
+    ((error && <span>{error}</span>) ||
+    (warning && <span>{warning}</span>))}
   </div>
   )
 }
+
+
+const validate = values => {
+  const errors = {}
+  if (!values.Make) {
+    errors.Make = 'Required'
+  }
+  if (!values.Model) {
+    errors.Make = 'Required'
+  }
+  return errors
+}
+
 
 const years = ["2000", "2001", "2003", "2004", "2005", "2006", "2007", "2008", "2009", "2010", "2011", "2012", "2013", "2014", "2015", "2016", "2017", "2018", "2019"];
 const makes = Object.keys(this.state);
 console.log('makesss', makes);
 const models2 = this.state;
 
-const Member = ({ selectedMake, fields, car, index }) => {
+const Member = ({ selectedMake, fields, car, index, validate }) => {
   const yearOptions = years.map(year => ({label: year, value: year}));
   const makeOptions = makes.map(make => ({label: make, value: make}));
   console.log(makeOptions, 'makeOptions');
@@ -203,6 +118,7 @@ const Member = ({ selectedMake, fields, car, index }) => {
     console.log('THIS STILL WORKS');
     modelOptions = myModels.map(model => ({label:model.model_name, value: model.model_name}));
   }
+
   return (
      <div>
          <div>
@@ -322,7 +238,9 @@ const renderMembers = ({ SelectionForm, fields, meta: { error, submitFailed } })
 
 
 SelectionForm =reduxForm({
-  form: 'SelectionForm' // a unique identifier for this form
+  form: 'SelectionForm',
+   // validate,
+  // warn
 })(SelectionForm)
 
 const selector = formValueSelector('SelectionForm') // <-- same as form name

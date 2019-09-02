@@ -22,6 +22,8 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Collapse from '@material-ui/core/Collapse';
 import Carousel, { Modal, ModalGateway } from 'react-images';
+import {deleteCard} from '../actions';
+import {connect} from 'react-redux';
 
 
 class CardItem extends React.Component {
@@ -41,6 +43,10 @@ class CardItem extends React.Component {
 
     toggleModal = () => {
       this.setState(state => ({ modalIsOpen: !state.modalIsOpen }));
+    }
+
+    deleteCard(){
+      this.props.deleteCard(this.props.car);
     }
 
     render(){
@@ -118,6 +124,9 @@ class CardItem extends React.Component {
             <Button size="small" color="primary"  onClick={this.toggleModal.bind(this)}>
               View More Pictures
             </Button>
+            <Button size="small" color="secondary"  onClick={this.deleteCard.bind(this)}>
+              View More Pictures
+            </Button>
         </CardActions>
           </Card>
         </div>
@@ -126,7 +135,7 @@ class CardItem extends React.Component {
       )
     }
 }
-export default CardItem;
+export default connect(null, {deleteCard})(CardItem);
 
 
 // <CardMedia style={{height: 0, paddingTop: '56.25%'}}

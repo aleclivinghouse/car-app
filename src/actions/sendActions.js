@@ -21,6 +21,7 @@ export const sendForm = data => dispatch => {
   ])
     .then(axios.spread((res1, res2) =>{
       res1.data.listings = [...res1.data.listings, ...res2.data.listings];
+      console.log('this is the response ', res1.data);
       dispatch({
         type: SEND_FORM,
         payload: res1.data
