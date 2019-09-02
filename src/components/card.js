@@ -121,11 +121,15 @@ class CardItem extends React.Component {
           <Button size="small" color="primary"  onClick={this.toggleSpecs.bind(this)}>
             Toggle
           </Button>
-            <Button size="small" color="primary"  onClick={this.toggleModal.bind(this)}>
+          {this.props.car.media.photo_links.length > 0 ?
+             <Button size="small" color="primary"  onClick={this.toggleModal.bind(this)}>
               View More Pictures
             </Button>
+            :
+            <div></div>
+          }
             <Button size="small" color="secondary"  onClick={this.deleteCard.bind(this)}>
-              View More Pictures
+              Delete
             </Button>
         </CardActions>
           </Card>
