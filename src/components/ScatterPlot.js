@@ -12,7 +12,8 @@ class ScatterPlot extends React.Component{
         chartData: [],
         elements: {},
         cars: [],
-        selectedCars: []
+        selectedCars: [],
+        indexes: []
       }
   }
 
@@ -75,11 +76,14 @@ componentWillReceiveProps(nextProps, prevProps){
           let theIndex;
           if(this.state.elements[0] !== undefined){
            theIndex = this.state.elements[0]._index || 0;
+           this.setState({indexes: [...this.state.indexes, theIndex]});
 
           console.log('theIndex', theIndex);
           console.log('this is the car data', this.state.cars[theIndex]);
+          if(!this.state.indexes.includes(theIndex)){
             this.setState({selectedCars: [...this.state.selectedCars, this.state.cars[theIndex]]});
             this.props.addSelectedCar(this.state.cars[theIndex]);
+            }
           }
         })}}
          height={400} options={{
