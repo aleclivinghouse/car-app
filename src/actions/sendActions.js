@@ -1,5 +1,5 @@
 import axios from 'axios';
-import {SEND_FORM, GET_ERRORS, ADD_MAX_MILES, ADD_MAX_PRICE} from './types';
+import {SEND_FORM, GET_ERRORS} from './types';
 
 //0xjgQHUmuKh1YL3JeeKrIvtfF7yUtRDr
 export const sendForm = data => dispatch => {
@@ -30,22 +30,6 @@ export const sendForm = data => dispatch => {
     .catch(err =>console.log(err));
 }
 
-
-export const maxMiles = miles => dispatch => {
-  console.log('maxMiles in action', miles)
-  return {
-    type: ADD_MAX_MILES,
-    payload: miles
-  };
-};
-
-export const maxPrice = price => dispatch => {
-  console.log("maxPrice in action", price);
-  return {
-    type: ADD_MAX_PRICE,
-    payload: price
-  };
-};
 // curl --location --request GET "http://api.marketcheck.com/v1/search?api_key={{api_key}}&year=2014&make=ford&latitude=34.05&longitude=-118.24&radius=100&car_type=used&start=0&rows=2&seller_type=dealer" \
 //   --header "Host: marketcheck-prod.apigee.net" \
 //   --data ""

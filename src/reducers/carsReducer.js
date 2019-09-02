@@ -2,8 +2,8 @@ import {ADD_SELECTED_CAR, DELETE_CARD, ADD_MAX_MILES, ADD_MAX_PRICE} from '../ac
 
 const initialState = {
   selectedCars : [],
-  maxMiles: {},
-  maxPrice: {}
+  maxMiles: '',
+  maxPrice: ''
 };
 
 export default function(state=initialState, action){
@@ -24,11 +24,14 @@ export default function(state=initialState, action){
       ...state,
       maxMiles: action.payload
     }
-    case ADD_MAX_PRICE:
-    return{
-      ...state,
-      maxPrice: action.payload
+    case ADD_MAX_PRICE: {
+      console.log(action.payload, 'PRICE PAYLOAD HERE')
+      return{
+        ...state,
+        maxPrice: action.payload
+      }
     }
+
     default:
       return state;
   }

@@ -19,10 +19,10 @@ class ScatterPlot extends React.Component{
 
 
 componentWillReceiveProps(nextProps, prevProps){
-  console.log(nextProps.maxMiles, 'maxMiles');
+
   let cars = nextProps.carData.length ? nextProps.carData[0].listings : [];
-  // cars = cars.filter(car => parseInt(car.price) <= parseInt(nextProps.maxPrice));
-  // cars = cars.filter(car => parseInt(car.miles) <= parseInt(nextProps.maxMiles));
+  cars = cars.filter(car => parseInt(car.price) <= parseInt(nextProps.maxPrice));
+  cars = cars.filter(car => parseInt(car.miles) <= parseInt(nextProps.maxMiles));
   this.setState({cars: [...this.state.cars, ...cars]});
   const newArr = cars.map(car => ({x: car.miles, y: car.price}));
   console.log('this is newArr nextProps', newArr[9]);
@@ -128,9 +128,9 @@ const mapStateToProps = state => {
   console.log('state in mpa state to props', state);
   return{
     carData: state.scatter.scatterPlotData,
-    maxPrice: state.cars.makPrice,
+    maxPrice: state.cars.maxPrice,
     maxMiles: state.cars.maxMiles
-  }
+  };
 }
 
 export default connect(mapStateToProps, {addSelectedCar})(ScatterPlot);

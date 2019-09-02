@@ -8,6 +8,7 @@ import Button from '@material-ui/core/Button';
 import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
 import DeleteIcon from '@material-ui/icons/Delete';
+// import validate from './validations';
 
 import {
   Checkbox,
@@ -53,9 +54,9 @@ class SelectionForm extends React.Component {
       };
     }
 
-  render(){
-    const { handleSubmit, pristine, reset, submitting, hasMake, fields} = this.props
 
+  render(){
+    const { handleSubmit, pristine, reset, submitting, hasMake, fields, invalid} = this.props
     console.log('this is the fields', fields);
     console.log('this is hasmake', hasMake);
     let models = [];
@@ -67,9 +68,8 @@ class SelectionForm extends React.Component {
      <option value={item.model_name}>{item.model_name}</option>
     );
     }
-
 const ReduxFormSelect = props => {
-  const { input, options, meta: {touched, error, warning}} = props;
+  const { input, options, meta: {touched, error, warning}, fields, invalid} = props;
 
   return (
     <div style={{width:200, display:'inline-block' }}>
@@ -87,20 +87,6 @@ const ReduxFormSelect = props => {
   </div>
   )
 }
-
-
-const validate = values => {
-  const errors = {}
-  if (!values.Make) {
-    errors.Make = 'Required'
-  }
-  if (!values.Model) {
-    errors.Make = 'Required'
-  }
-  return errors
-}
-
-
 const years = ["2000", "2001", "2002", "2003", "2004", "2005", "2006", "2007", "2008", "2009", "2010", "2011", "2012", "2013", "2014", "2015", "2016", "2017", "2018", "2019"];
 const miles = ["10000", "20000", "30000","40000", "50000", "60000", "70000", "80000", "90000", "100000", '110000', '120000','130000', '140000'];
 const prices = ["5000", '10000', '15000', '20000', '25000', '30000', '35000', '40000', '45000', '50000', '60000', '70000', '80000', '90000', '100000']
@@ -112,9 +98,10 @@ const Member = ({ selectedMake, fields, car, index, validate }) => {
   const makeOptions = makes.map(make => ({label: make, value: make}));
   const priceOptions = prices.map(price => ({label: price, value: price}));
   const mileOptions = miles.map(mile => ({label: mile, value: mile}));
+  const required = value => value ? undefined : 'Required'
+
   console.log(makeOptions, 'makeOptions');
   let modelOptions = [];
-
   let myModels = models2[selectedMake];
   console.log('this is my models', myModels);
   if(myModels !== undefined){
@@ -134,6 +121,8 @@ const Member = ({ selectedMake, fields, car, index, validate }) => {
           component={ReduxFormSelect}
           options={makeOptions}
           label="Make"
+          required={[required]}
+
         >
           // {makes.map((make, i) => <option key={i} value={make}>{make}</option>)}
         </Field>
@@ -144,6 +133,7 @@ const Member = ({ selectedMake, fields, car, index, validate }) => {
               component={ReduxFormSelect}
               options={modelOptions}
               label="Model"
+              required={[required]}
             >
             // {myModels.map((model, i) => <option key={i} value={model.model_name}>{model.model_name}</option>)}
           </Field>
@@ -152,6 +142,7 @@ const Member = ({ selectedMake, fields, car, index, validate }) => {
             component={ReduxFormSelect}
             options={yearOptions}
             label="First Year"
+            required={[required]}
           >
             //{years.map((year, i) => <option  key = {i} value={year} >{year}</option>)}
           </Field>
@@ -159,6 +150,7 @@ const Member = ({ selectedMake, fields, car, index, validate }) => {
             name={`${car}.Date2`}
             component={ReduxFormSelect}
             options={yearOptions}
+            required={[required]}
           >
             //{years.map((year, i) => <option  key = {i} value={year} >{year}</option>)}
           </Field>
@@ -232,6 +224,7 @@ const renderMembers = ({ SelectionForm, fields, meta: { error, submitFailed } })
             component={ReduxFormSelect}
             label="price"
             options={priceOptions}
+
             >
           </Field>
         </div>
@@ -243,6 +236,7 @@ const renderMembers = ({ SelectionForm, fields, meta: { error, submitFailed } })
             component={ReduxFormSelect}
             label="miles"
             options={mileOptions}
+
             >
           </Field>
         </div>
@@ -250,7 +244,7 @@ const renderMembers = ({ SelectionForm, fields, meta: { error, submitFailed } })
           <FieldArray name="members" component={renderMembers} />
         </div>
       <div>
-        <Button type="submit" variant="contained" color="primary" disabled={pristine || submitting}>
+        <Button type="submit" variant="contained" color="primary" disabled={pristine || submitting }>
           Submit
         </Button>
         <Button type="button" variant="outlined" color="primary" disabled={pristine || submitting} onClick={reset}>
