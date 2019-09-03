@@ -8,7 +8,7 @@ import Button from '@material-ui/core/Button';
 import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
 import DeleteIcon from '@material-ui/icons/Delete';
-// import validate from './validations';
+import validate from './validations';
 
 import {
   Checkbox,
@@ -162,7 +162,7 @@ const Member = ({ selectedMake, fields, car, index, validate }) => {
   );
 };
 
-const renderMembers = ({ SelectionForm, fields, meta: { error, submitFailed } }) => {
+const renderMembers = ({ SelectionForm, fields, meta: { error, submitFailed }, invalid }) => {
   const selector = formValueSelector('SelectionForm');
   console.log('form');
   console.log(SelectionForm);
@@ -244,10 +244,10 @@ const renderMembers = ({ SelectionForm, fields, meta: { error, submitFailed } })
           <FieldArray name="members" component={renderMembers} />
         </div>
       <div>
-        <Button type="submit" variant="contained" color="primary" disabled={pristine || submitting }>
+        <Button type="submit" variant="contained" color="primary" disabled={this.props.invalid || pristine || submitting || invalid}>
           Submit
         </Button>
-        <Button type="button" variant="outlined" color="primary" disabled={pristine || submitting} onClick={reset}>
+        <Button type="button" variant="outlined" color="primary" disabled={pristine || submitting || invalid} onClick={reset}>
           Clear Values
         </Button>
       </div>
@@ -261,7 +261,7 @@ const renderMembers = ({ SelectionForm, fields, meta: { error, submitFailed } })
 
 SelectionForm =reduxForm({
   form: 'SelectionForm',
-   // validate,
+   validate
   // warn
 })(SelectionForm)
 

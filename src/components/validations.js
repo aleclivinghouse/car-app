@@ -1,5 +1,5 @@
 const validate = values => {
-  console.log("these are the values", values);
+  console.log("these are the values in validation", values);
   const errors = {};
   if(!values.radius){
     errors.radius = "Required"
@@ -11,6 +11,7 @@ const validate = values => {
     errors.miles = "Required"
   }
   const carsArrayErrors = [];
+  if(values.members !== undefined && values.members.length > 0){
     values.members.forEach((car, carIndex)=> {
       let carErrors = {};
     if (!car || !car.Make) {
@@ -30,6 +31,7 @@ const validate = values => {
               carsArrayErrors[carIndex] = carErrors;
           }
   });
+}
   if(carsArrayErrors.length){
     errors.cars = carsArrayErrors;
   }
