@@ -40,6 +40,40 @@ componentWillReceiveProps(nextProps, prevProps){
 
 
   render(){
+
+    const options = {
+      responsive: true,
+      maintainAspectRatio: false,
+      title: {
+        display: true,
+        text: 'Chart.js Line Chart'
+      },
+      tooltips: {
+        mode: 'index',
+        intersect: false,
+      },
+      hover: {
+        mode: 'nearest',
+        intersect: true
+      },
+      aspectRatio: 1,
+      scales: {
+        xAxes: [{
+          display: true,
+          scaleLabel: {
+            display: true,
+            labelString: 'Miles'
+          }
+        }],
+        yAxes: [{
+          display: true,
+          scaleLabel: {
+            display: true,
+            labelString: 'Price'
+          }
+        }]
+      }
+    }
     // const cars = this.props.carData.length ? this.props.carData[0].listings : [];
     //
     // console.log('these are the cars', cars);
@@ -87,38 +121,7 @@ componentWillReceiveProps(nextProps, prevProps){
             this.props.addSelectedCar(this.state.cars[theIndex]);
           }
         })}}
-         height={400} options={{
-           responsive: true,
-           maintainAspectRatio: false,
-           title: {
-             display: true,
-             text: 'Chart.js Line Chart'
-           },
-           tooltips: {
-             mode: 'index',
-             intersect: false,
-           },
-           hover: {
-             mode: 'nearest',
-             intersect: true
-           },
-           aspectRatio: 1,
-           scales: {
-             xAxes: [{
-               display: true,
-               scaleLabel: {
-                 display: true,
-                 labelString: 'Miles'
-               }
-             }],
-             yAxes: [{
-               display: true,
-               scaleLabel: {
-                 display: true,
-                 labelString: 'Price'
-               }
-             }]
-           }  }}/>
+         height={400} options={{options}}/>
       </div>
     );
   }
