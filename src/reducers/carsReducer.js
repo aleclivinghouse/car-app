@@ -1,4 +1,4 @@
-import {ADD_SELECTED_CAR, DELETE_CARD, ADD_MAX_MILES, ADD_MAX_PRICE} from '../actions/types';
+import {ADD_SELECTED_CAR, DELETE_CARD, ADD_MAX_MILES, ADD_MAX_PRICE, FETCH_MAKES} from '../actions/types';
 
 const initialState = {
   selectedCars : [],
@@ -29,6 +29,13 @@ export default function(state=initialState, action){
       return{
         ...state,
         maxPrice: action.payload
+      }
+    }
+    case FETCH_MAKES: {
+      console.log(action.payload, 'FETCH_MAKES')
+      return{
+        ...state,
+        makes:action.payload
       }
     }
 
