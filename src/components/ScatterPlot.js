@@ -13,7 +13,8 @@ class ScatterPlot extends React.Component{
         elements: {},
         cars: [],
         selectedCars: [],
-        indexes: []
+        indexes: [],
+        forHover: []
       }
   }
 
@@ -25,6 +26,8 @@ componentWillReceiveProps(nextProps, prevProps){
   cars = cars.filter(car => parseInt(car.miles) <= parseInt(nextProps.maxMiles));
   this.setState({cars: [...this.state.cars, ...cars]});
   const newArr = cars.map(car => ({x: car.miles, y: car.price}));
+  const forHover = cars.map(car => ({year: car.build.year, make: car.build.make, model: car.build.model}));
+  this.setState({forHover});
   console.log('this is newArr nextProps', newArr[9]);
   if(Object.keys(this.state.chartData).length===0){
     this.setState({chartData: newArr});
@@ -40,48 +43,7 @@ componentWillReceiveProps(nextProps, prevProps){
 
 
   render(){
-
-    const options = {
-      responsive: true,
-      maintainAspectRatio: false,
-      title: {
-        display: true,
-        text: 'Chart.js Line Chart'
-      },
-      tooltips: {
-        mode: 'index',
-        intersect: false,
-      },
-      hover: {
-        mode: 'nearest',
-        intersect: true
-      },
-      aspectRatio: 1,
-      scales: {
-        xAxes: [{
-          display: true,
-          scaleLabel: {
-            display: true,
-            labelString: 'Miles'
-          }
-        }],
-        yAxes: [{
-          display: true,
-          scaleLabel: {
-            display: true,
-            labelString: 'Price'
-          }
-        }]
-      }
-    }
-    // const cars = this.props.carData.length ? this.props.carData[0].listings : [];
-    //
-    // console.log('these are the cars', cars);
-    //
-    // const newArr = cars.map(car => ({x: car.price, y: car.miles}))
-    // console.log('this is newArr', newArr);
-    //
-    // this.setState({chartData: newArr});
+  let forHover = this.state.forHover;
 
     const theData = {
   labels: ['Scatter'],
@@ -121,7 +83,42 @@ componentWillReceiveProps(nextProps, prevProps){
             this.props.addSelectedCar(this.state.cars[theIndex]);
           }
         })}}
-         height={400} options={{options}}/>
+         height={400} options={{responsive: true,
+         maintainAspectRatio: false,
+         title: {
+           display: true,
+           text: 'Chart.js Line Chart'
+         },
+         tooltips: {
+           mode: 'index',
+           intersect: false,
+           callbacks: {
+                   label: function(tooltipItem, data) {
+                   var label = forHover[tooltipItem.index].make + ' '+ forHover[tooltipItem.index].model + ' '+ forHover[tooltipItem.index].year;
+               return label;
+             }
+         },
+         hover: {
+           mode: 'nearest',
+           intersect: true
+         },
+         aspectRatio: 1,
+         scales: {
+           xAxes: [{
+             display: true,
+             scaleLabel: {
+               display: true,
+               labelString: 'Miles'
+             }
+           }],
+           yAxes: [{
+             display: true,
+             scaleLabel: {
+               display: true,
+               labelString: 'Price'
+             }
+           }]
+         }}}}/>
       </div>
     );
   }
