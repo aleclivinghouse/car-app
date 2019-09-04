@@ -29,19 +29,3 @@ export const sendForm = data => dispatch => {
     }))
     .catch(err =>console.log(err));
 }
-
-// export const fetchMakes = data => dispatch => {
-//   return Promise.all(data.makes.map((make, index) =>{
-//     console.log('this is the make', make);
-//     let use = make.toLowerCase();
-//     let url = ``;
-//     return axios.get(url , {
-//         headers: {
-//           "Content-Type": "application/json",
-//           'Access-Control-Allow-Origin' : 'localhost:3000'
-//         }})
-//   })).then(makes => {
-//     dispatch({type: FETCH_MAKES , payload: makes})
-// });
-// }
-http://marketcheck-prod.apigee.net/v1/search?api_key=0xjgQHUmuKh1YL3JeeKrIvtfF7yUtRDr&rows=0&make=ford&facets=model|0|20

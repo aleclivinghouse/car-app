@@ -1,3 +1,4 @@
+/* eslint-disable import/first */
 import React from 'react'
 import { Field, formValueSelector, FieldArray, reduxForm } from 'redux-form'
 import {connect} from 'react-redux';
@@ -9,6 +10,8 @@ import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
 import DeleteIcon from '@material-ui/icons/Delete';
 import validate from './validations';
+const allMakesModels = require('./theObject');
+//import allMakesModels from './theObject';
 
 import {
   Checkbox,
@@ -90,9 +93,8 @@ const ReduxFormSelect = props => {
 const years = ["2000", "2001", "2002", "2003", "2004", "2005", "2006", "2007", "2008", "2009", "2010", "2011", "2012", "2013", "2014", "2015", "2016", "2017", "2018", "2019"];
 const miles = ["10000", "20000", "30000","40000", "50000", "60000", "70000", "80000", "90000", "100000", '110000', '120000','130000', '140000'];
 const prices = ["5000", '10000', '15000', '20000', '25000', '30000', '35000', '40000', '45000', '50000', '60000', '70000', '80000', '90000', '100000']
-const makes = Object.keys(this.state);
-console.log('makesss', makes);
-const models2 = this.state;
+const makes = Object.keys(allMakesModels);
+console.log('makessssssssss', makes);
 const Member = ({ selectedMake, fields, car, index, validate }) => {
   const yearOptions = years.map(year => ({label: year, value: year}));
   const makeOptions = makes.map(make => ({label: make, value: make}));
@@ -102,11 +104,11 @@ const Member = ({ selectedMake, fields, car, index, validate }) => {
 
   console.log(makeOptions, 'makeOptions');
   let modelOptions = [];
-  let myModels = models2[selectedMake];
+  let myModels = allMakesModels[selectedMake];
   console.log('this is my models', myModels);
   if(myModels !== undefined){
     console.log('THIS STILL WORKS');
-    modelOptions = myModels.map(model => ({label:model.model_name, value: model.model_name}));
+    modelOptions = myModels.map(model => ({label:model.item, value: model.item}));
   }
 
   return (

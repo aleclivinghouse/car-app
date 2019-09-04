@@ -27,7 +27,8 @@ componentWillReceiveProps(nextProps, prevProps){
   this.setState({cars: [...this.state.cars, ...cars]});
   const newArr = cars.map(car => ({x: car.miles, y: car.price}));
   const forHover = cars.map(car => ({year: car.build.year, make: car.build.make, model: car.build.model}));
-  this.setState({forHover});
+
+  this.setState({forHover: [...this.state.forHover, ...forHover]});
   console.log('this is newArr nextProps', newArr[9]);
   if(Object.keys(this.state.chartData).length===0){
     this.setState({chartData: newArr});
@@ -94,7 +95,8 @@ componentWillReceiveProps(nextProps, prevProps){
            intersect: false,
            callbacks: {
                    label: function(tooltipItem, data) {
-                   var label = forHover[tooltipItem.index].make + ' '+ forHover[tooltipItem.index].model + ' '+ forHover[tooltipItem.index].year;
+                     console.log('foroveeeerrr', forHover, 'tolltipitemm', tooltipItem)
+                   var label = forHover[tooltipItem.index] && forHover[tooltipItem.index].make + ' '+ forHover[tooltipItem.index].model + ' '+ forHover[tooltipItem.index].year;
                return label;
              }
          },

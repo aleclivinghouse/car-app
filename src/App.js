@@ -21,8 +21,6 @@ class App extends React.Component{
       <SelectionFormWrapper/>
       <ScatterPlot />
       <Cards />
-      <Makes />
-      <Models />
   </div>
     </Provider>
   );
