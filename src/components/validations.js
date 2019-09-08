@@ -10,31 +10,20 @@ const validate = values => {
   if(!values.miles){
     errors.miles = "Required"
   }
-  const carsArrayErrors = [];
-  if(values.members !== undefined && values.members.length > 0){
-    values.members.forEach((car, carIndex)=> {
-      let carErrors = {};
-    if (!car || !car.Make) {
-        carErrors.Make = 'Required';
-        carsArrayErrors[carIndex] = carErrors;
-      }
-      if (!car || !car.Model) {
-          carErrors.Model= 'Required';
-          carsArrayErrors[carIndex] = carErrors;
-        }
-        if (!car || !car.Date1) {
-            carErrors.Date1= 'Required';
-            carsArrayErrors[carIndex] = carErrors;
-          }
-        if (!car || !car.Date2) {
-              carErrors.Date2= 'Required';
-              carsArrayErrors[carIndex] = carErrors;
-          }
+  if(!values.members || !values.members.length || !values.members[0].Make){
+    errors.members = { _error: 'At least one member must be entered' };
+  } else {
+    const membersArrayErrors = [];
+    values.members.forEach((car, index)=> {
+     if(!car.Make || !car.Model || !car.Date1 || !car.Date2){
+       errors.members = { _error: 'Car fields must be filled' };
+     }
   });
-}
-  if(carsArrayErrors.length){
-    errors.cars = carsArrayErrors;
+  if(membersArrayErrors.length){
+    console.log(membersArrayErrors, 'memberArrayErrors');
+      errors.members = membersArrayErrors;
   }
+}
   return errors;
 }
 
