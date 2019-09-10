@@ -51,6 +51,7 @@ class CardItem extends React.Component {
 
     render(){
       let car = this.props.car;
+      console.log('this is a car', car);
       console.log(this.props.car.media.photo_links, "photos");
       const forCarousel = this.props.car.media.photo_links.map(photo => ({src:photo}));
       function createData(miles, price, carfax, dealerLocation, vimNumber, dealerWebsite, engine, highwayMiles){
@@ -60,6 +61,8 @@ class CardItem extends React.Component {
       const rows = [
         createData('miles', car.miles),
         createData('price', car.price),
+        createData('interior_color', car.interior_color),
+        createData('exterior_color', car.exterior_color),
         createData('Carfax Clean Title', car.carfax_clean_title.toString()),
         createData("Dealer Location", car.dealer.street),
         createData("Vin number", car.vin),
@@ -104,6 +107,8 @@ class CardItem extends React.Component {
                       <TableCell align="right">{row.miles}</TableCell>
                       <TableCell align="right">{row.price}</TableCell>
                       <TableCell align="right">{row.carfax}</TableCell>
+                      <TableCell align="right">{row.exterior_color}</TableCell>
+                      <TableCell align="right">{row.interior_color}</TableCell>
                       <TableCell align="right">{row.dealerLocation}</TableCell>
                       <TableCell align="right">{row.vimNumber}</TableCell>
                       <TableCell align="right">{row.dealerWebsite}</TableCell>

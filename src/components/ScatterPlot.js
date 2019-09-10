@@ -24,6 +24,7 @@ componentWillReceiveProps(nextProps, prevProps){
   let cars = nextProps.carData.length ? nextProps.carData[0].listings : [];
   cars = cars.filter(car => parseInt(car.price) <= parseInt(nextProps.maxPrice));
   cars = cars.filter(car => parseInt(car.miles) <= parseInt(nextProps.maxMiles));
+  if(cars !== this.state.cars){
   this.setState({cars: [...this.state.cars, ...cars]});
   const newArr = cars.map(car => ({x: car.miles, y: car.price}));
   const forHover = cars.map(car => ({year: car.build.year, make: car.build.make, model: car.build.model}));
@@ -40,6 +41,7 @@ componentWillReceiveProps(nextProps, prevProps){
     });
 
  }
+}
 }
 
 
