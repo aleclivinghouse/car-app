@@ -57,13 +57,18 @@ class CardItem extends React.Component {
       function createData(miles, price, carfax, dealerLocation, vimNumber, dealerWebsite, engine, highwayMiles){
         return {miles, price, carfax, dealerLocation, vimNumber, dealerWebsite, engine, highwayMiles};
       }
-
+      let title = "";
+      if(car.carfax_clean_title === false){
+        title = "unknown"
+      } else {
+        title = "yes"
+      }
       const rows = [
         createData('miles', car.miles),
         createData('price', car.price),
         createData('interior_color', car.interior_color),
         createData('exterior_color', car.exterior_color),
-        createData('Carfax Clean Title', car.carfax_clean_title.toString()),
+        createData('Carfax Clean Title', title),
         createData("Dealer Location", car.dealer.street),
         createData("Vin number", car.vin),
         createData("Dealer Website", car.dealer.website),
