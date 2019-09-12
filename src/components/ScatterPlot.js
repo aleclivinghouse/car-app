@@ -92,21 +92,6 @@ componentWillReceiveProps(nextProps, prevProps){
            display: true,
            text: 'Chart.js Line Chart'
          },
-         tooltips: {
-           mode: 'index',
-           intersect: false,
-           callbacks: {
-                   label: function(tooltipItem, data) {
-                     console.log('foroveeeerrr', forHover, 'tolltipitemm', tooltipItem)
-                   var label = forHover[tooltipItem.index] && forHover[tooltipItem.index].make + ' '+ forHover[tooltipItem.index].model + ' '+ forHover[tooltipItem.index].year;
-               return label;
-             }
-         },
-         hover: {
-           mode: 'nearest',
-           intersect: true
-         },
-         aspectRatio: 1,
          scales: {
            xAxes: [{
              display: true,
@@ -122,12 +107,27 @@ componentWillReceiveProps(nextProps, prevProps){
                labelString: 'Price'
              }
            }]
-         }}}}/>
+         },
+         tooltips: {
+           mode: 'index',
+           intersect: false,
+           callbacks: {
+                   label: function(tooltipItem, data) {
+                     console.log('foroveeeerrr', forHover, 'tolltipitemm', tooltipItem)
+                   var label = forHover[tooltipItem.index] && forHover[tooltipItem.index].make + ' '+ forHover[tooltipItem.index].model + ' '+ forHover[tooltipItem.index].year;
+               return label;
+             }
+         },
+         hover: {
+           mode: 'nearest',
+           intersect: true
+         },
+         aspectRatio: 1,
+         }}}/>
       </div>
     );
   }
 }
-
 const mapStateToProps = state => {
   console.log('state in mpa state to props', state);
   return{
