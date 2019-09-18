@@ -4,9 +4,8 @@ import {connect} from 'react-redux';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import axios from 'axios';
 import {maxPrice, maxMiles} from '../actions';
-// google api
-//AIzaSyD8pHSBiK0WRs4rZxyBem5I5nrWKhJ9mG0
 import {sendForm} from '.././actions/sendActions';
+require('dotenv').config();
 
 class FormWrapper extends Component{
   constructor(props) {
@@ -18,7 +17,8 @@ class FormWrapper extends Component{
   }
 
   componentDidMount(){
-    axios.post("https://www.googleapis.com/geolocation/v1/geolocate?key=AIzaSyD8pHSBiK0WRs4rZxyBem5I5nrWKhJ9mG0", {})
+    console.log('geo', process.env.REACT_APP_GEO_URL);
+    axios.post(`https://www.googleapis.com/geolocation/v1/geolocate?key=${process.env.REACT_APP_GEO_URL}`, {})
     .then(res => this.setState({location: res.data.location}));
   }
 

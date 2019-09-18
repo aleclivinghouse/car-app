@@ -1,11 +1,12 @@
 import axios from 'axios';
 import {SEND_FORM, GET_ERRORS, FETCH_MAKES} from './types';
-
+require('dotenv').config();
 //0xjgQHUmuKh1YL3JeeKrIvtfF7yUtRDr
 export const sendForm = data => dispatch => {
+  console.log(process.env.REACT_APP_BASE_URL, 'this is the path');
   console.log('this is the data in the action ', data);
-  const url = `http://marketcheck-prod.apigee.net/v1/search?api_key=0xjgQHUmuKh1YL3JeeKrIvtfF7yUtRDr&year=${data.year}&make=${data.make}&rows=50&model=${data.model}&latitude=${data.lat}&longitude=${data.lng}&radius=${data.radius}`;
-  const url2 = `http://marketcheck-prod.apigee.net/v1/search?api_key=0xjgQHUmuKh1YL3JeeKrIvtfF7yUtRDr&year=${data.year}&make=${data.make}&rows=50&start=51&model=${data.model}&latitude=${data.lat}&longitude=${data.lng}&radius=${data.radius}`;
+  const url = `http://marketcheck-prod.apigee.net/v1/search?api_key=${process.env.REACT_APP_BASE_URL}&year=${data.year}&make=${data.make}&rows=50&model=${data.model}&latitude=${data.lat}&longitude=${data.lng}&radius=${data.radius}`;
+  const url2 = `http://marketcheck-prod.apigee.net/v1/search?api_key=${process.env.REACT_APP_BASE_URL}&year=${data.year}&make=${data.make}&rows=50&start=51&model=${data.model}&latitude=${data.lat}&longitude=${data.lng}&radius=${data.radius}`;
   axios.all([
     axios.get(url, {
       headers: {
